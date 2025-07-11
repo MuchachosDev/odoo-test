@@ -1,0 +1,21 @@
+# Código de terceros (se descarga automáticamente)
+odoo-core/
+addons/
+
+# Datos y logs
+logs/
+*.log
+filestore/
+sessions/
+
+# Docker
+.env
+docker-compose.override.yml
+
+# IDE y temporales
+.vscode/
+.idea/
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
