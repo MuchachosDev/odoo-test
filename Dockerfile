@@ -15,7 +15,7 @@ RUN pip3 install -r /etc/odoo/requirements.txt
 # --- INICIO DE LA SOLUCIÓN ---
 # Corregir los permisos de la librería pyafipws para que el usuario odoo pueda escribir en el caché.
 # La ruta puede variar ligeramente según la versión de Python de la imagen base.
-RUN chown -R odoo:odoo /usr/local/lib/python3.11/site-packages/pyafipws
+RUN chown -R odoo:odoo /usr/local/lib/python3.10/dist-packages/pyafipws
 # --- FIN DE LA SOLUCIÓN ---
 
 # Copiar configuración personalizada
