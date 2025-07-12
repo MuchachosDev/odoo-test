@@ -34,7 +34,7 @@ echo "  📁 OCA repos..."
 [ ! -d "stock-logistics-workflow" ] && git clone -b 17.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git
 [ ! -d "pos" ] && git clone -b 17.0 --depth 1 https://github.com/OCA/pos.git
 [ ! -d "web" ] && git clone -b 17.0 --depth 1 https://github.com/OCA/web.git
-[ ! -d "web" ] && git clone -b 17.0 --depth 1 https://github.com/OCA/purchase-workflow.git
+[ ! -d "purchase-workflow" ] && git clone -b 17.0 --depth 1 https://github.com/OCA/purchase-workflow.git
 
 cd ..
 
