@@ -1,0 +1,64 @@
+name: Deploy Odoo to Server
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔑 Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+    - name: 🌐 Add server to known hosts
+      run: |
+        ssh-keyscan -H ${{ vars.HOST }} >> ~/.ssh/known_hosts
+        
+    - name: 🚀 Deploy to server
+      run: |
+        ssh ${{ vars.USERNAME }}@${{ vars.HOST }} << 'EOF'
+          set -e
+          
+          echo "🔄 Iniciando deployment..."
+          
+          # Navegar al directorio del proyecto
+          cd ${{ vars.PROJECT_PATH }}/odoo-test
+          
+          # Actualizar código
+          echo "⬇️ Actualizando código..."
+          git fetch origin
+          git reset --hard origin/${{ vars.BRANCH || 'main' }}
+          
+          # Dar permisos de ejecución al setup
+          chmod +x setup.sh
+          
+          # Ejecutar setup.sh
+          echo "🔧 Ejecutando setup.sh..."
+          ./setup.sh
+          
+          echo "✅ Setup completado!"
+        EOF
+        
+    - name: 📢 Deployment Summary
+      if: always()
+      run: |
+        echo "## 📋 Resumen del Deployment" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "✅ **Estado:** Exitoso" >> $GITHUB_STEP_SUMMARY
+          echo "🔧 **Acción:** setup.sh ejecutado correctamente" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 **Servidor:** ${{ vars.HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "📅 **Fecha:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "🔄 **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Estado:** Fallido" >> $GITHUB_STEP_SUMMARY
+          echo "🔍 **Revisa los logs de setup.sh para más detalles**" >> $GITHUB_STEP_SUMMARY
+        fi

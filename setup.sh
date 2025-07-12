@@ -24,6 +24,7 @@ echo "  📁 INGADHOC repos..."
 [ ! -d "stock" ] && git clone -b 17.0 --depth 1 https://github.com/ingadhoc/stock.git
 [ ! -d "account-financial-tools" ] && git clone -b 17.0 --depth 1 https://github.com/ingadhoc/account-financial-tools.git
 [ ! -d "account-payment" ] && git clone -b 17.0 --depth 1 https://github.com/ingadhoc/account-payment.git
+[ ! -d "product" ] && git clone -b 17.0 --depth 1 https://github.com/ingadhoc/product.git
 
 # OCA
 echo "  📁 OCA repos..."
