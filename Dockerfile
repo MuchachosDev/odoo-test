@@ -23,9 +23,9 @@ COPY config/odoo.conf /etc/odoo/
 
 # Crear directorios para addons
 # Es mejor que el usuario 'odoo' cree la carpeta que va a usar.
-USER odoo
-RUN mkdir -p /opt/odoo/addons
 
+RUN mkdir -p /opt/odoo/addons
+RUN chown -R odoo:odoo /opt/odoo/addons
 # Exponer el puerto
 EXPOSE 8069
 
