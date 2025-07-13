@@ -42,8 +42,11 @@ cd ..
 echo "🐳 Construyendo imagen Docker personalizada..."
 docker-compose build
 
-echo "🛑 Deteniendo servicios existentes..."
-docker-compose down
+echo "🛑 Deteniendo servicios y limpiando volúmenes..."
+docker-compose down -v
+
+echo "🧹 Eliminando volúmenes nombrados..."
+docker volume rm -f $(docker-compose config --volumes 2>/dev/null) 2>/dev/null || true
 
 echo "🚀 Iniciando servicios Docker..."
 docker-compose up -d
