@@ -40,7 +40,7 @@ echo "  📁 OCA repos..."
 cd ..
 
 echo "🐳 Construyendo imagen Docker personalizada..."
-docker-compose build
+docker-compose build --no-cache
 
 echo "🛑 Deteniendo servicios y limpiando volúmenes..."
 docker-compose down -v
