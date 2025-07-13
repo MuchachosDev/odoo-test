@@ -42,6 +42,9 @@ cd ..
 echo "🐳 Construyendo imagen Docker personalizada..."
 docker-compose build
 
+echo "🛑 Deteniendo servicios existentes..."
+docker-compose down
+
 echo "🚀 Iniciando servicios Docker..."
 docker-compose up -d
 
